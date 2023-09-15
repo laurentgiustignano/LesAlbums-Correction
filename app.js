@@ -1,5 +1,5 @@
-import {fetchJson} from "./functions/api.js";
 import {injectElements, renewTag} from "./functions/dom.js";
+import {mesDatas} from "./datas.js";
 
 const wrapper = document.querySelector('#albumsAvecVues')
 const loader = document.createElement('p')
@@ -61,9 +61,11 @@ function tous() {
     injectElements(albumsAvecVues, laListe);
 }
 
-try {
-    const albums = await fetchJson('https://jsonplaceholder.typicode.com/albums')
-    console.log(albums)
+
+const albums = [...mesDatas]
+
+if (albums.length > 0) {
+
     loader.remove() // le chargement a réussi.
 
     document.querySelector('#top3').addEventListener('click', top3)
@@ -72,9 +74,9 @@ try {
 
     albumsAvecVues = ajouterVues(albums)
 
+}
+else {
 
-} catch (err) {
     loader.innerText = "Impossible de contacter la ressource distante"
     loader.style.color = 'red'
 }
-
